@@ -8,8 +8,51 @@ from safetensors.torch import save_file
 from transformers import LlavaNextForConditionalGeneration, LlavaNextProcessor
 from typing import Dict, Sequence
 import torch.nn as nn
-from eval_data_loader import POPEDataSetEval
 import argparse
+
+class LureDataset(Dataset):
+    def __init__(self, pope_path, data_path, trans):
+        self.pope_path = pope_path
+        self.data_path = data_path
+        # print(data_path)
+        self.trans = trans
+
+        image_list, query_list, label_list, question_id = [], [], [], []
+
+
+        for q in open(pope_path, 'r'):
+            line = json.loads(q)
+            image_list.append(line['image'])
+            query_list.append(line['text'])
+            label_list.append(line['label'])
+            question_id.append(line['question_id'])
+
+        # for i in range(len(label_list)):
+        #     if label_list[i] == 'no':
+        #         label_list[i] = 0
+        #     else:
+        #         label_list[i] = 1
+
+        assert len(image_list) == len(query_list)
+        assert len(image_list) == len(label_list)
+
+        self.image_list = image_list
+        self.query_list = query_list
+        self.label_list = label_list
+        self.question_id = question_id
+
+    def __len__(self):
+        return len(self.label_list)
+
+    def __getitem__(self, index):
+        image_path = os.path.join(self.data_path, self.image_list[index])
+        raw_image = Image.open(image_path).convert("RGB")
+        # image = self.trans(raw_image)
+        image = raw_image
+        query = self.query_list[index]
+        label = self.label_list[index]
+        question_id = self.question_id[index]
+        return {"image": image, "query": query, "label": label, "question_id": question_id}
 
 class SAE(nn.Module):
     def __init__(self):
@@ -231,9 +274,9 @@ if __name__ == "__main__":
     model = LlavaNextForConditionalGeneration.from_pretrained(
         args.model_name, torch_dtype=torch.float16, low_cpu_mem_usage=True
     ).to("cuda")
-    pope_path = 'lure_for_gen.jsonl'
-    dataset = POPEDataSetEval(
-        pope_path=pope_path,
+    lure_path = 'lure_for_gen.jsonl'
+    dataset = LureDataset(
+        lure_path=lure_path,
         data_path="train2014",
         trans=processor.image_processor,
     )
