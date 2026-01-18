@@ -7,6 +7,12 @@ By leveraging **SAVE**, researchers can pinpoint and manipulate specific neural 
 
 ## 📋 Requirements
 
+Install the required Python environment using Conda:
+
+```bash
+conda env create -f environment.yml
+conda activate save
+```
 * **Model:** `llava-hf/llava-v1.6-mistral-7b-hf`
 * **SAE Weights:** Download `.pkl` checkpoints for your target layers from [flybamboo/vlm-saes](https://huggingface.co/flybamboo/vlm-saes/tree/main) and place them in the `SAE/` directory.
 * **Datasets:** `lure_for_gen.jsonl` (POPE), COCO images, and `chair/chair.jsonl` for evaluation.
