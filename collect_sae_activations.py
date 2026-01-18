@@ -267,6 +267,7 @@ if __name__ == "__main__":
     parser.add_argument("--model-name", type=str, default="llava-hf/llava-v1.6-mistral-7b-hf", help="Model name")
     parser.add_argument("--save-dir", type=str, required=True)
     parser.add_argument("--layer", type=int, required=True)
+    parser.add_argument("--substr", type=str, default="lure")
 
     args = parser.parse_args()
 
@@ -293,13 +294,14 @@ if __name__ == "__main__":
     submodule_dict = {
         f"model.layers.{layer}": sae  
     }
+    save_dir = os.path.join(args.save_dir, f"{args.substr}_layer{args.layer}")
     cacher = FeatureAnswerCache(
         model=model,
         processor=processor,
         submodule_dict=submodule_dict,
         batch_size=1,
         shard_size=0,
-        save_dir=args.save_dir,
+        save_dir=save_dir,
     )
 
     cacher.run(dataset)
