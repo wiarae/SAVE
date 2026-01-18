@@ -107,14 +107,14 @@ def find_best_separation_features(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--save-dir", type=str, default="sae_cache_lure")
+    parser.add_argument("--save-dir", type=str, default="sae_cache")
     parser.add_argument("--layer", type=int, default=24)
     parser.add_argument("--substr", type=str, default="lure")
     parser.add_argument("--model", type=str, default="llava_1_6")
     
     args = parser.parse_args()
 
-    save_dir = f"{args.save_dir}/{args.substr}_rebuttal_layer{args.layer}"
+    save_dir = f"{args.save_dir}/{args.substr}_layer{args.layer}"
     correct_dir = f"{save_dir}/correct"
     incorrect_dir = f"{save_dir}/incorrect"
     module_path = f"model.layers.{args.layer}"
