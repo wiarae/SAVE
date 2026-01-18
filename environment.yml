@@ -1,0 +1,29 @@
+name: save
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pytorch
+  - pytorch-cuda=12.1  
+  - torchvision
+  - torchaudio
+  - pip
+  - pip:
+      - transformers==4.49.0
+      - accelerate==1.2.1
+      - safetensors==0.4.5
+      - bitsandbytes==0.46.0
+      - peft==0.14.0
+      - baukit==0.0.1
+      - einops==0.8.1      
+      - pillow==11.0.0
+      - numpy==2.0.2
+      - sentencepiece==0.2.0
+      - tqdm==4.67.1      
+      - nltk==3.9.1
+      - scikit-learn==1.6.0
+      - pyyaml==6.0.2
+      - hjson==3.1.0
