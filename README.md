@@ -60,7 +60,6 @@ python chair_steer.py \
 * `--faith`: Enhances "grounding" features (adds the  direction of correct features).
 * `--hal`: Suppresses "hallucination" features (subtracts the  direction of hallucinated features).
 * `--both`: Performs both enhancement and suppression simultaneously.
-* `--alpha-ablation`: Dynamically scales steering intensity based on the activation norm.
 
 ---
 
