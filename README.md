@@ -20,6 +20,7 @@ Extract Top-k sparse activations from the model. Features are automatically cate
 python collect_sae_activations.py --layer 24 --save-dir "./sae_cache"
 
 ```
+Results will be saved in: `./sae_cache/lure_layer24/`
 
 ---
 
